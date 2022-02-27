@@ -24,7 +24,6 @@ namespace DutchTreat.Controllers
             if (ModelState.IsValid)
             {
                 // TODO: Implement sent email.
-                // test
             }
             else
             {
