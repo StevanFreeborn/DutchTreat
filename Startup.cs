@@ -1,3 +1,4 @@
+using DutchTreat.Data;
 using DutchTreat.Interfaces;
 using DutchTreat.Services;
 using Microsoft.AspNetCore.Builder;
@@ -13,6 +14,8 @@ namespace DutchTreat
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<DutchContext>();
+
             services.AddTransient<IMailService, NullMailService>();
 
             services.AddControllersWithViews()
