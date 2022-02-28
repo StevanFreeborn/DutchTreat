@@ -1,3 +1,4 @@
+using System.Reflection;
 using DutchTreat.Data;
 using DutchTreat.Interfaces;
 using DutchTreat.Services;
@@ -18,6 +19,8 @@ namespace DutchTreat
             services.AddDbContext<DutchContext>();
 
             services.AddTransient<DutchSeeder>();
+
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddScoped<IDutchRepository, DutchRepository>();
 

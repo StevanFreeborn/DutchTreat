@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using DutchTreat.Data.Entities;
 using DutchTreat.Interfaces;
+using DutchTreat.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace DutchTreat.Controllers
@@ -17,25 +20,32 @@ namespace DutchTreat.Controllers
     {
         private readonly IDutchRepository _repository;
         private readonly ILogger<OrdersController> _logger;
+        private readonly IMapper _mapper;
 
-        public OrdersController(IDutchRepository repository, ILogger<OrdersController> logger)
+        public OrdersController(
+            IDutchRepository repository, 
+            ILogger<OrdersController> logger,
+            IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public ActionResult<IEnumerable<Order>> Get()
+        public ActionResult<IEnumerable<OrderViewModel>> Get()
         {
             try
             {
-                return Ok(_repository.GetAllOrders());
+                var result = _repository.GetAllOrders();
+
+                return Ok(_mapper.Map<IEnumerable<OrderViewModel>>(result));
             }
             catch (Exception e)
             {
-                _logger.LogError($"Failed to get all orders: {e} ");
+                _logger.LogError($"Failed to get all orders: {e}");
                 return BadRequest("Failed to get all orders.");
             }
         }
@@ -44,7 +54,7 @@ namespace DutchTreat.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
-        public ActionResult<Order> GetOrderById(int id)
+        public ActionResult<OrderViewModel> GetOrderById(int id)
         {
             try
             {
@@ -52,30 +62,45 @@ namespace DutchTreat.Controllers
 
                 if (order != null)
                 {
-                    return Ok(order);
+                    return Ok(_mapper.Map<OrderViewModel>(order));
                 }
 
                 return NotFound($"Could not find order with id: {id}");
             }
             catch (Exception e)
             {
-                _logger.LogError($"Failed to get order: {e} ");
+                _logger.LogError($"Failed to get order: {e}");
                 return BadRequest("Failed to get order.");
             }
         }
 
         [HttpPost]
         [ProducesResponseType(201)]
-        public IActionResult Post([FromBody] Order model)
+        [ProducesResponseType(400)]
+        public IActionResult Post([FromBody] OrderViewModel model)
         {
             try
             {
-                _repository.AddEntity(model);
-
-                if (_repository.SaveAll())
+                if (ModelState.IsValid)
                 {
-                    return Created($"/api/orders/{model.Id}", model);
+                    var newOrder = _mapper.Map<Order>(model);
+
+                    if (newOrder.OrderDate == DateTime.MinValue)
+                    {
+                        newOrder.OrderDate = DateTime.Now;
+                    }
+
+                    _repository.AddEntity(newOrder);
+
+                    if (_repository.SaveAll())
+                    {
+                        return Created($"/api/orders/{newOrder.Id}", _mapper.Map<OrderViewModel>(newOrder));
+                    }
                 }
+
+                
+
+                
             }
             catch (Exception e)
             {
