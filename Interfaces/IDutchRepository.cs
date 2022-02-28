@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using DutchTreat.Data.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DutchTreat.Interfaces
 {
@@ -7,6 +8,11 @@ namespace DutchTreat.Interfaces
     {
         IEnumerable<Product> GetAllProducts();
         IEnumerable<Product> GetProductsByCategory(string category);
+        
+        IEnumerable<Order> GetAllOrders();
+        Order GetOrderById(int id);
+
         bool SaveAll();
+        void AddEntity(object model);
     }
 }
