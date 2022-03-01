@@ -1,6 +1,19 @@
-﻿@model IEnumerable<Product>
+﻿@using Microsoft.CodeAnalysis
+@using System.Security.Policy
+@model IEnumerable<Product>
+@section Scripts
+{
+    <script src="~/client/polyfills.js" asp-append-version="true"></script>
+    <script src="~/client/runtime.js" asp-append-version="true"></script>
+    <script src="~/client/main.js" asp-append-version="true"></script>
+}
+@section head
+{
+    <link href="~/client/styles.ef46db3751d8e999.css" rel="stylesheet"/>
+}
+<the-shop></the-shop>
 
-<h1>Shop</h1>
+@*<h1>Shop</h1>
 <p>Count: @Model.Count()</p>
 
 <div class="row">
@@ -20,4 +33,4 @@
             </div>
         </div>
     }
-</div>
+</div>*@
