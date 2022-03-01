@@ -4,14 +4,16 @@ using DutchTreat.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DutchTreat.Data.Migrations
 {
     [DbContext(typeof(DutchContext))]
-    partial class DutchContextModelSnapshot : ModelSnapshot
+    [Migration("20220301003537_IdentityMigration")]
+    partial class IdentityMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,7 +47,7 @@ namespace DutchTreat.Data.Migrations
                         new
                         {
                             Id = 1,
-                            OrderDate = new DateTime(2022, 3, 1, 1, 1, 28, 15, DateTimeKind.Utc).AddTicks(5553),
+                            OrderDate = new DateTime(2022, 3, 1, 0, 35, 37, 402, DateTimeKind.Utc).AddTicks(4050),
                             OrderNumber = "12345"
                         });
                 });
