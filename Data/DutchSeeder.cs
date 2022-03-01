@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using DutchTreat.Data.Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace DutchTreat.Data
 {

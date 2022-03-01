@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using DutchTreat.Data.Entities;
 using DutchTreat.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -79,7 +77,35 @@ namespace DutchTreat.Data
             }
         }
 
-        public Order GetOrderById(int id)
+        public IEnumerable<Order> GetAllOrdersByUser(string username, bool includeItems)
+        {
+            try
+            {
+                if (includeItems)
+                {
+                    return _ctx
+                        .Orders
+                        .Where(o => o.User.UserName == username)
+                        .Include(o => o.Items)
+                        .ThenInclude(oi => oi.Product)
+                        .OrderBy(o => o.OrderDate)
+                        .ToList();
+                }
+
+                return _ctx
+                    .Orders
+                    .Where(o => o.User.UserName == username)
+                    .OrderBy(o => o.OrderDate)
+                    .ToList();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Failed to get all orders: {e}");
+                return null;
+            }
+        }
+
+        public Order GetOrderById(string username, int id)
         {
             try
             {
@@ -87,6 +113,7 @@ namespace DutchTreat.Data
                     .Orders
                     .Include(o => o.Items)
                     .ThenInclude(oi => oi.Product)
+                    .Where(o => o.Id == id && o.User.UserName == username)
                     .FirstOrDefault(o => o.Id == id);
             }
             catch (Exception e)

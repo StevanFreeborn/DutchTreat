@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using DutchTreat.Data;
-using DutchTreat.Interfaces;
+﻿using DutchTreat.Interfaces;
 using DutchTreat.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

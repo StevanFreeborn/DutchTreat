@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using DutchTreat.Data.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using DutchTreat.Data.Entities;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DutchTreat.ViewModels
 {
