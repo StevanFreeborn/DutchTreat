@@ -53,14 +53,22 @@ namespace DutchTreat.Data
             }
         }
 
-        public IEnumerable<Order> GetAllOrders()
+        public IEnumerable<Order> GetAllOrders(bool includeItems)
         {
             try
             {
+                if (includeItems)
+                {
+                    return _ctx
+                        .Orders
+                        .Include(o => o.Items)
+                        .ThenInclude(oi => oi.Product)
+                        .OrderBy(o => o.OrderDate)
+                        .ToList();
+                }
+
                 return _ctx
                     .Orders
-                    .Include(o => o.Items)
-                    .ThenInclude(oi => oi.Product)
                     .OrderBy(o => o.OrderDate)
                     .ToList();
             }
