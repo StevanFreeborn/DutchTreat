@@ -1,9 +1,26 @@
-﻿.product-image {
+﻿.product {
+    background-color: lightgray;
+    border-style: solid;
+    border-color: grey;
+    border-width: 1px;
+    border-radius: 2px;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.product-image {
     border: 1px #ddd solid;
-    box-shadow: rgba(0,0,0,.4) 2px 2px;
-    margin: 2px;
 }
 
 .products-props {
     font-size: .9rem;
+}
+
+ul.products-props {
+    padding: 0px;
+}
+
+ul.products-props li {
+    list-style-type: none;
 }

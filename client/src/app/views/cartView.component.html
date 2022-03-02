@@ -1,3 +1,37 @@
-﻿<h3>Cart</h3>
-<div>Count: {{ store.order.items.length }}</div>
-<hr/>
+﻿
+<div id="theCart" class="card sticky-top">
+    <h3>Cart</h3>
+    <div>
+        <table class="table table-condensed table-striped table-responsive w-auto">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Art</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of store.order.items">
+                    <td>
+                        <img src="/img/{{ item.productArtId }}.jpg" alt="{{ item.productTitle }}"
+                             class="img-fluid product-thumb"/>
+                    </td>
+                    <td>{{ item.productCategory }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.unitPrice | currency }}</td>
+                    <td>{{ item.unitPrice * item.quantity | currency}}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">
+                        <strong>Subtotal: </strong>{{ store.order.subtotal | currency}}
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <hr/>
+</div>

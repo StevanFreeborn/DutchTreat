@@ -19,25 +19,37 @@ export class Store
 
     loadProducts(): Observable<void>
     {
-        return this.http.get<[]>("/api/products")
+        return this.http.get<Product[]>("/api/products")
             .pipe(map(data =>
                     { 
-                        this.products = data;
+                        this.products = ((data) as Product[]);
                         return;
                     }));
     }
 
     addToOrder(product: Product)
     {
-        const newItem = new OrderItem();
-        newItem.productId = product.id;
-        newItem.productTitle = product.title;
-        newItem.productArtId = product.artId;
-        newItem.productArtist = product.artist;
-        newItem.productCategory = product.category;
-        newItem.productSize = product.size;
-        newItem.quantity = 1;
+        let item: OrderItem;
 
-        this.order.items.push(newItem);
+        item = ((this.order.items.find(o => o.productId === product.id)) as OrderItem);
+
+        if (item)
+        {
+            item.quantity++;
+        }
+        else
+        {
+            item = new OrderItem();
+            item.productId = product.id;
+            item.productTitle = product.title;
+            item.productArtId = product.artId;
+            item.productArtist = product.artist;
+            item.productCategory = product.category;
+            item.productSize = product.size;
+            item.unitPrice = product.price;
+            item.quantity = 1;
+
+            this.order.items.push(item);
+        }
     }
 }

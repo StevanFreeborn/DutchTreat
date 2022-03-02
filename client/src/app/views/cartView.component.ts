@@ -5,7 +5,7 @@ import { Store } from "../services/store.service"
     {
         selector: "cart",
         templateUrl: "cartView.component.html",
-        styleUrls: []
+        styleUrls: ["cartView.component.css"]
     }
 )
 export class CartView
