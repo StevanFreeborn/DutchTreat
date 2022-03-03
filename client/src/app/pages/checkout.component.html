@@ -1,5 +1,6 @@
 ﻿<div class="row">
-  <h3>Confirm Order</h3>
+    <h3>Confirm Order</h3>
+    <div *ngIf="errorMessage" class="alert alert-danger" style="display:block">{{ errorMessage }}</div>
   <table class="table table-bordered table-hover">
     <tr *ngFor="let o of store.order.items">
       <td><img src="/img/{{ o.productArtId }}.jpg" alt="o.productTitle" class="img-thumbnail checkout-thumb" /></td>

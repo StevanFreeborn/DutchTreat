@@ -8,7 +8,10 @@ import { Store } from './services/store.service';
 import { CartView } from './views/cartView.component';
 import { ShopPage } from './pages/shopPage.component';
 import { Checkout } from './pages/checkout.component';
+import { LoginPage } from './pages/loginPage.component';
+import { AuthActivator } from './services/authActivator.service';
 import router from './router';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -16,15 +19,18 @@ import router from './router';
         ProductListView,
         CartView,
         ShopPage,
-        Checkout
+        Checkout,
+        LoginPage
     ],
     imports: [
         BrowserModule,
         HttpClientModule,
-        router
+        router,
+        FormsModule
     ],
     providers: [
-        Store
+        Store,
+        AuthActivator
         ],
     bootstrap: [AppComponent]
 })

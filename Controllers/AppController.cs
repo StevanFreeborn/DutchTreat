@@ -53,7 +53,6 @@ namespace DutchTreat.Controllers
             return View();
         }
 
-        [Authorize]
         [HttpGet]
         public IActionResult Shop()
         {
